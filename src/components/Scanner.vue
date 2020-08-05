@@ -149,6 +149,6 @@ button {
 .scanner {
   margin: auto;
   max-width: 80%;
-  max-height: 75vh;
+  max-height: 65vh;
 }
 </style>
