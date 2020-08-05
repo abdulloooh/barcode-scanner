@@ -46,6 +46,7 @@ export default {
   },
 
   mounted() {
+    ScanditSDK.CameraAccess.getCameras();
     ScanditSDK.configure(key, { engineLocation })
       .then(() => {
         return ScanditSDK.BarcodePicker.create(this.$refs.barcodePickerRef, {
@@ -103,6 +104,7 @@ export default {
   methods: {
     startBarcodePicker() {
       this.$refs.barcodeStarterRef.hidden = this.$refs.descriptionRef.hidden = true;
+
       this.scanditBarcodePicker.accessCamera().then(() => {
         this.scanditBarcodePicker.setVisible(true);
         this.scanditBarcodePicker.resumeScanning();
@@ -146,7 +148,7 @@ button {
 
 .scanner {
   margin: auto;
-  max-width: 1280px;
+  max-width: 80%;
   max-height: 75vh;
 }
 </style>
