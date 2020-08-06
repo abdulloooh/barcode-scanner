@@ -89,6 +89,7 @@ export default {
               },
               ""
             );
+            //you can call pause function here, this is where capturing completes
             this.scanditBarcodePicker.pauseScanning();
             setTimeout(() => {
               this.scanditBarcodePicker.resumeScanning();
