@@ -2,11 +2,13 @@
   <section>
     <!-- Just headings -->
     <article>
-      <div class="name">Barcode Scanner Implementation</div>
+      <!-- <div class="name">Barcode Scanner Implementation</div> -->
 
-      <div ref="descriptionRef" id="description" class="description">
-        Start the scanner and then aim at a barcode to get the encoded data.
-      </div>
+      <div
+        ref="descriptionRef"
+        id="description"
+        class="description"
+      >Start the scanner and then aim at a barcode to get the encoded data.</div>
 
       <div ref="libLoadingRef" id="lib-loading">
         <br />loading, please wait...
@@ -19,13 +21,9 @@
       id="barcode-picker-starter-button"
       v-on:click="startBarcodePicker"
       hidden
-    >
-      Start Scanning
-    </button>
+    >Start Scanning</button>
 
-    <div ref="barcodeResultRef" id="barcode-result" class="result-text">
-      &nbsp;
-    </div>
+    <div ref="barcodeResultRef" id="barcode-result" class="result-text">&nbsp;</div>
 
     <div ref="barcodePickerRef" id="barcode-picker" class="scanner"></div>
   </section>
@@ -41,7 +39,7 @@ export default {
   props: {},
   data() {
     return {
-      scanditBarcodePicker: undefined,
+      scanditBarcodePicker: undefined
     };
   },
 
@@ -54,8 +52,8 @@ export default {
           accessCamera: false,
           visible: false,
           playSoundOnScan: true,
-          vibrateOnScan: true,
-        }).then((barcodePicker) => {
+          vibrateOnScan: true
+        }).then(barcodePicker => {
           this.scanditBarcodePicker = barcodePicker;
           const scanSettings = new ScanditSDK.ScanSettings({
             enabledSymbologies: [
@@ -67,16 +65,16 @@ export default {
               "code39",
               "itf",
               "qr",
-              "data-matrix",
+              "data-matrix"
             ],
-            searchArea: { x: 0, y: 0.333, width: 1, height: 0.333 },
+            searchArea: { x: 0, y: 0.333, width: 1, height: 0.333 }
           });
           barcodePicker.applyScanSettings(scanSettings);
           barcodePicker.on("ready", () => {
             this.$refs.libLoadingRef.hidden = true;
             this.$refs.barcodeStarterRef.hidden = false;
           });
-          barcodePicker.on("scan", (scanResult) => {
+          barcodePicker.on("scan", scanResult => {
             this.$refs.barcodeResultRef.innerHTML = scanResult.barcodes.reduce(
               (string, barcode) => {
                 return (
@@ -91,6 +89,10 @@ export default {
               },
               ""
             );
+            this.scanditBarcodePicker.pauseScanning();
+            setTimeout(() => {
+              this.scanditBarcodePicker.resumeScanning();
+            }, 10000);
           });
           barcodePicker.on("scanError", function(error) {
             console.error(error);
@@ -109,8 +111,8 @@ export default {
         this.scanditBarcodePicker.setVisible(true);
         this.scanditBarcodePicker.resumeScanning();
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -128,6 +130,7 @@ section {
   font-size: 3vh;
   font-weight: bold;
   margin: 4vh;
+  margin-top: 18vh;
 }
 
 button {
@@ -145,10 +148,10 @@ button {
 .result-text {
   padding: 2vh;
 }
-
 .scanner {
-  margin: auto;
-  max-width: 80%;
-  max-height: 65vh;
+  /* margin: auto; */
+  width: 100% !important;
+  height: 250px;
+  /* max-height: 20vh; */
 }
 </style>
